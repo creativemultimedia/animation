@@ -9,15 +9,15 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateMixin{
   AnimationController? controller;
-  Animation? animation;
+  Animation<double>? animation;
+  Animation? changeColor;
 
   void initState() {
     super.initState();
-    controller = AnimationController(
-        duration: Duration(seconds: 1),
-        vsync: this);
+    controller =
+        AnimationController(duration: Duration(seconds: 1), vsync: this);
     animation = CurvedAnimation(parent: controller!, curve: Curves.slowMiddle);
-
+    changeColor = ColorTween(begin: Colors.red, end: Colors.blue).animate(animation!);
     controller!.forward();
     animation!.addListener(() => setState(() {}));
 
@@ -30,12 +30,12 @@ class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateM
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
-      body: Center(
+      body:  Center(
         child: Container(
             margin: EdgeInsets.only(bottom: animation!.value * 400),
             width: 50,
             height: 50,
-            color: Colors.red),
+            color: changeColor!.value),
       ),
     );
   }
